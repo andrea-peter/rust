@@ -39,7 +39,10 @@ fn main() {
     // We lost ownershup of my_string when calling takes_and_gives_back()
     // println!("Still owner of {my_string}");
 
-    // #### References and borrowing
+    // Getting the string back by using tuples, but this is too laborious
+    let my_string = String::from("My string");
+    let (my_string, len) = calculate_length(my_string);
+    println!("Length of '{my_string}' is {len}");
 }
 
 fn takes_ownership(some_string: String) {
@@ -57,4 +60,9 @@ fn gives_ownership() -> String {
 
 fn takes_and_gives_back(a_string: String) -> String {
     a_string
+}
+
+fn calculate_length(s: String) -> (String, usize) {
+    let length = s.len();
+    (s, length)
 }
