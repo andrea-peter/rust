@@ -9,7 +9,7 @@ mod back_of_house {
     }
 }
 
-// Patch "shortcuts"
+// Path "shortcuts"
 use back_of_house::kitchen;
 use back_of_house::kitchen::cook;
 
