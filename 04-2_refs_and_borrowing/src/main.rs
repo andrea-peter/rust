@@ -4,6 +4,7 @@ fn main() {
     let len = calculate_length(&s1);
     println!("The length of '{s1}' is {len}");
 
+    // Changing a value via mutable reference
     let mut s2 = String::from("Hello");
     // Notice the `mut` keyword
     change(&mut s2);
@@ -15,13 +16,13 @@ fn main() {
     println!("{r31}");
     let r32 = &mut s3;
     println!("{r32}");
-    // This will not work
-    // println!("{r1}");
+    // This will not work, r31 is not valid anymore
+    // println!("{r31}");
 
-    // Cannot make an immutable reference if a mutable reference already exists
+    // Making an immutable reference invalidates all existing mustable references
     let r33 = &s3;
     // This will not work
-    // println!("{r31}, {r33}");
+    // println!("{r31}");
 
     // Artificially restricting reference scope
     let mut s4 = String::from("Hello");
