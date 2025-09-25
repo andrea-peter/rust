@@ -16,13 +16,16 @@ fn main() {
     println!("The email of '{}' is '{}'", user1.username, user1.email);
 
     // Struct update syntax,
-    // username has been moved from user1 to user2
+    // username has been moved from user1 to user2,
+    // active and sign_in_count have been copied (they implement the Copy trait)
     let user2 = User {
         email: String::from("another_emaill.example.com"),
         ..user1
     };
     println!("User1's email is {}", user1.email);
     println!("User2's email is {}", user2.email);
+    println!("User1 has signed in {} time(s)", user1.sign_in_count);
+    println!("User2 has signed in {} time(s)", user2.sign_in_count);
     // This will not work as user1's username has been moved to user2
     // (because String does not implement the Copy trait)
     // println!("User1's username is {}", user1.username);

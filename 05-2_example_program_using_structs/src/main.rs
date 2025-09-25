@@ -7,7 +7,7 @@ struct Rectangle {
 fn main() {
     let scale = 2;
     let rect1 = Rectangle {
-        // dbg! takes ownership of the exèression and returns the result...
+        // dbg! takes ownership of the expression and returns the result...
         width: dbg!(30 * scale),
         height: 50,
     };
@@ -15,13 +15,13 @@ fn main() {
     //  - Formatting with ':?' or ':#?'
     //  - Passing the object to the dbg! macro
     println!("rect1 is {rect1:?}");
-    println!("rect1 is {rect1:#?}"); // Pritty print
+    println!("rect1 is {rect1:#?}"); // Pretty print
 
     // ...or we can pass it a reference
     dbg!(&rect1);
 
     println!(
-        "The are of the rectacngle is {} square pixels",
+        "The area of the rectangle is {} square pixels",
         area(&rect1)
     );
 }
