@@ -29,11 +29,11 @@ fn main() {
     );
 
     // Thanks to the fact that slices are references,
-    // bus like these are caught during compile time
+    // bugs like these are caught during compile time
     // (cannot have a mutable and an immutable reference at the same time)
     // let mut some_phrase = String::from("Hello world!");
     // let word = first_word_slice(&some_phrase);
-    // some_phrase.clear();
+    // some_phrase.clear(); // Needed to make variable actually mutable
     // println!("The first word in '{some_phrase}' is {}", word);
 }
 
