@@ -1,0 +1,10 @@
+[package]
+name = "unrecoverable_errors"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+# Dont clean up stack
+# [profile.release]
+# panic = 'abort'
