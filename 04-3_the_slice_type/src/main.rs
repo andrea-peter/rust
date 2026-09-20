@@ -3,8 +3,8 @@ fn main() {
     // of elements on a collection
     let phrase = String::from("The phrase");
     println!(
-        "The first word in '{phrase}' is at index {}",
-        first_word(&phrase)
+        "The first word in '{phrase}' ends at index {}",
+        first_word_end(&phrase)
     );
 
     // String slices
@@ -37,8 +37,8 @@ fn main() {
     // println!("The first word in '{some_phrase}' is {}", word);
 }
 
-/// Return index of first word in space separated phrase
-fn first_word(s: &String) -> usize {
+/// Return index of last letter in first word in space separated phrase
+fn first_word_end(s: &String) -> usize {
     let bytes = s.as_bytes();
     for (i, &item) in bytes.iter().enumerate() {
         if item == b' ' {

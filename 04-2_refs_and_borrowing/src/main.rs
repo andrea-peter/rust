@@ -19,7 +19,7 @@ fn main() {
     // This will not work, r31 is not valid anymore
     // println!("{r31}");
 
-    // Making an immutable reference invalidates all existing mustable references
+    // Making an immutable reference invalidates all existing mutable references
     let r33 = &s3;
     // This will not work
     // println!("{r31}");
