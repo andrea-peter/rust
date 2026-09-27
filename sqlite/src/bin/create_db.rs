@@ -1,8 +1,9 @@
 use std::env::var;
-use std::fs;
 
 use clap::Parser;
-use rusqlite::{Connection, Result};
+use rusqlite::Result;
+
+use sqlite_example::{add_user, create_db, create_user_table, get_users};
 
 // Command line parameters
 #[derive(Parser)]
@@ -12,67 +13,26 @@ struct Args {
     force: bool,
 }
 
-// Database table
-#[derive(Debug)]
-struct User {
-    id: u32,
-    name: String,
-    address: Option<String>,
-}
-
 fn main() -> Result<()> {
-    // Get command line args
     let args = Args::parse();
 
-    // Check file exists
-    if fs::exists(&args.out_file).unwrap() {
-        if args.force {
-            println!("File '{}' already exists, removing", args.out_file);
-            fs::remove_file(&args.out_file).unwrap();
-        } else {
-            panic!(
-                "OUTFILE {} exists, pass the `-f` option to overwrite",
-                args.out_file
-            );
-        }
-    }
-
-    println!("Writing DB to {}", args.out_file);
-
-    let conn = Connection::open(&args.out_file)?;
+    println!("Creating DB at {}", args.out_file);
+    let conn = create_db(&args.out_file, args.force).expect("Could not create database");
 
     println!("Creating table 'user'");
-    conn.execute(
-        "CREATE TABLE user (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            address TEXT NULL
-        )",
-        (),
-    )?;
+    create_user_table(&conn).expect("Could not create user table");
 
     let user_name = var("USER")
         .expect("Env variable USER not set")
         .replace('"', "");
 
     println!("Adding default user '{user_name}'",);
-    conn.execute(
-        "INSERT INTO user (name, address) VALUES (?1, NULL)",
-        (&user_name,),
-    )?;
+    add_user(&conn, &user_name, &None).expect("Could not add default user");
 
     println!("Current DB content");
     println!("Users: ");
-    let mut stmt = conn.prepare("SELECT id, name, address FROM user")?;
-    let user_iter = stmt.query_map([], |row| {
-        Ok(User {
-            id: row.get(0)?,
-            name: row.get(1)?,
-            address: row.get(2)?,
-        })
-    })?;
-    for user in user_iter {
-        println!(" - {:?}", user.unwrap());
+    for user in get_users(&conn)? {
+        println!(" - {:?}", user);
     }
 
     Ok(())
